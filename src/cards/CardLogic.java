@@ -10,7 +10,6 @@ class CardLogic
 	protected Runnable onResurrect; //  effect invoked whilst the card is being moved from discard zone to hand
 	
 	
-	public static GameManager gameManager;
 	public static int idCounter = 0;
 	protected CardLocation location;
 	
@@ -69,11 +68,6 @@ class CardLogic
 	public void setOnResurrect(Runnable onResurrect) 
 	{
 		this.onResurrect = onResurrect;
-	}
-	
-	public static void setGameManager(GameManager gameManager)
-	{
-		CardLogic.gameManager = gameManager;
 	}
 	
 	public int getId()

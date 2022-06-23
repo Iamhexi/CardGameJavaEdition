@@ -1,6 +1,10 @@
 package cards;
 
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.io.IOException;
+
 import javax.swing.*;
 
 /*
@@ -12,6 +16,26 @@ import javax.swing.*;
 	- develop GameInterface and organise basic game layout, delegating it from Main
 */
 
+class MyPanel extends JPanel {
+
+    
+
+	@Override
+    protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	      g.setColor(Color.YELLOW);
+	      g.fillOval(10, 10, 200, 200);
+	      // draw Eyes
+	      g.setColor(Color.BLACK);
+	      g.fillOval(55, 65, 30, 30);
+	      g.fillOval(135, 65, 30, 30);
+	      // draw Mouth
+	      g.fillOval(50, 110, 120, 60);
+	      // adding smile
+	      g.setColor(Color.YELLOW);
+	      g.fillRect(50, 110, 120, 30);
+    }
+}
 
 public class Main 
 {
@@ -19,34 +43,22 @@ public class Main
 	{
 		System.setProperty("awt.useSystemAAFontSettings","on");	
 		JFrame frame = new JFrame();
+		MyPanel p = new MyPanel();
+		p.setBounds(0, 0, 200, 200);
 		
-		JButton button = new JButton("Press me");
-		button.setBounds(200, 200, 200, 200);
-		frame.add(button);
+		try {
+			Card c = new Card("assets/card.png", new Vector2i(0, 0));
+			frame.add(c.cardVisual);
+		} catch (IOException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
 		
-		DrawingSurface surface = new DrawingSurface();
-		surface.setBounds(0, 0, 500, 500);
-		frame.add(surface);
 		
 		frame.setTitle("Cards");
 		frame.setSize(1000, 500);
 		frame.setLayout(null);
 		frame.setVisible(true);
-		
-		GameManager manager = new DuelManager();
-		Player p1 = new Player();
-		p1.setName("Johnny");
-		
-		JLabel label = new JLabel();
-		label.setBounds(new Rectangle(600, 200, 150, 50));
-		label.setText(p1.getName());
-		frame.add(label);
-		
-		CardLogic.setGameManager(manager);
-		CardLogic c = new SpellCard();
-		c.setOnPlay( () -> { manager.enemyTakesDamage(2);  } );
-		c.play();
-		
 		
 	}
 }
