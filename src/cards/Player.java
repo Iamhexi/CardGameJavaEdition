@@ -1,37 +1,42 @@
 package cards;
 
-public abstract class Player
+public final class Player
 {
-	protected static int idCounter = 0;
-	protected int health;
-	
-	protected static int id;
-	protected Deck deck;
-	
+	private PlayerLogic playerLogic;
+	private PlayerVisual playerVisual;
 	
 	public Player()
 	{
-		health = 20;
-		id = idCounter++;
+		playerLogic = new PlayerLogic();
+		playerVisual = new PlayerVisual();
 	}
 	
-	public void takeDamage(int amount)
+	public String getName()
 	{
-		health -= amount;
+		return playerLogic.name;
 	}
 	
-	public void healDamage(int amount)
+	public void setName(String newName)
 	{
-		this.takeDamage(-amount);
-	}
-	
-	public int getId()
-	{
-		return id;
+		playerLogic.name = newName;
 	}
 	
 	public void drawCard()
 	{
-		deck.moveRandomCard(CardLocation.Deck, CardLocation.Hand);
+		playerLogic.drawCard(); 
+		playerVisual.playDrawCardAnimation();
 	}
+	
+	public void takeDamage(int amount)
+	{
+		playerLogic.takeDamage(amount); 
+		playerVisual.playTakeDamageAnimation(amount);
+	}
+	
+	public void healDamage(int amount)
+	{
+		playerLogic.healDamage(amount); 
+		playerVisual.playHealDamageAnimation(amount); 
+	}
+	
 }
