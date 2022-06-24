@@ -11,7 +11,7 @@ class CardLogic
 	
 	
 	public static int idCounter = 0;
-	protected CardLocation location;
+	protected CardLocation location = CardLocation.Deck;
 	
 
 	

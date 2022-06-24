@@ -12,17 +12,32 @@ public class Card
 	
 	protected CardLogic cardLogic;
 	protected CardVisual cardVisual;
+
+	public CardLocation getLocation()
+	{
+		return cardLogic.location;
+	}
 	
 	public Card()
 	{
 		cardLogic = new CardLogic();
 		cardVisual = new CardVisual();
+		
+		setOnPlay( () -> {} );
+		setOnDiscard( () -> {} );
+		setOnResurrect( () -> {} );
+		setOnDraw( () -> {} );
 	}
 	
 	public Card(String pathToPicture, Vector2i location) throws IOException
 	{
 		cardLogic = new CardLogic();
 		cardVisual = new CardVisual(pathToPicture, location);
+		
+		setOnPlay( () -> {} );
+		setOnDiscard( () -> {} );
+		setOnResurrect( () -> {} );
+		setOnDraw( () -> {} );
 	}
 	
 	public void play()
@@ -56,17 +71,17 @@ public class Card
 	
 	public void setOnDiscard(Runnable action) 
 	{
-		cardLogic.setOnPlay(action);
+		cardLogic.setOnDiscard(action);
 	}
 	
 	public void setOnResurrect(Runnable action) 
 	{
-		cardLogic.setOnPlay(action);
+		cardLogic.setOnResurrect(action);
 	}
 	
 	public void setOnDraw(Runnable action) 
 	{
-		cardLogic.setOnPlay(action);
+		cardLogic.setOnDraw(action);
 	}
 	
 	
@@ -74,8 +89,16 @@ public class Card
 	{
 		return cardVisual;
 	}
+
+	public int getId() 
+	{
+		return cardLogic.getId();
+	}
 	
-		
+	public String getTitle()
+	{
+		return cardVisual.title.getText();
+	}
 		
 	
 }

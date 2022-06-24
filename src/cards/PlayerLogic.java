@@ -33,6 +33,6 @@ public class PlayerLogic
 	
 	public void drawCard()
 	{
-		deck.moveRandomCard(CardLocation.Deck, CardLocation.Hand);
+		// TODO implement this method
 	}
 }

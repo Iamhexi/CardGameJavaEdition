@@ -2,45 +2,86 @@ package cards;
 
 import java.util.*;
 
+import javax.swing.JFrame;
+
 public class Deck
 {
-	private LinkedList<CardLogic> cards;
+	private LinkedList<Card> cards;
 	
 	public Deck()
 	{
-		cards = new LinkedList<CardLogic>();
+		cards = new LinkedList<Card>();
+	}
+	
+	public Deck(JFrame frame)
+	{
+		cards = new LinkedList<Card>();
+		initialise(frame);
+	}
+	
+	private void initialise(JFrame frame)
+	{
+		for(Card card: cards)
+			frame.add(card.cardVisual);
 	}
 	
 	public int countCards(CardLocation location)
 	{
 		int counter = 0;
-		for (CardLogic card: cards)
-			if (card.location == location)
+		for (Card card: cards)
+			if (card.getLocation() == location)
 				counter++;
 		
 		return counter;
 	}
 	
-	public void moveRandomCard(CardLocation from, CardLocation to)
+	private Card getRandomCard(CardLocation location)
 	{
-		for (CardLogic card: cards)
-			if (card.location == from)
-				card.location = to;
-		// TODO it cannot operate directly on location
+		LinkedList<Card> cardsInLocation = new LinkedList<Card>();
+		for (Card card: cards)
+			if (card.getLocation() == location)
+				cardsInLocation.add(card);
+		
+		int upperBound = cardsInLocation.size();
+		Random rndGenerator = new Random();
+		
+		return cardsInLocation.get( rndGenerator.nextInt(upperBound) );
 	}
 	
-	public void moveCard(int cardId, CardLocation from, CardLocation to)
+	public void discardRandom()
 	{
-		for (CardLogic card: cards)
-			if (card.getId() == cardId && card.location == from)
-				card.location = to;
+		getRandomCard(CardLocation.Hand).discard();
 	}
 	
-	public void moveCard(int cardId,  CardLocation to)
+	public void discard(String cardTitle)
 	{
-		for (CardLogic card: cards)
-			if (card.getId() == cardId)
-				card.location = to;
+		for (Card card: cards)
+			if (card.getTitle() == cardTitle)
+				card.discard();
+	}
+	
+	public void drawRandom()
+	{
+		getRandomCard(CardLocation.Deck).draw();
+	}
+	
+	public void draw(String cardTitle)
+	{
+		for (Card card: cards)
+			if (card.getTitle() == cardTitle)
+				card.draw();
+	}
+	
+	public void playRandom()
+	{
+		getRandomCard(CardLocation.Deck).play();
+	}
+	
+	public void play(String cardTitle)
+	{
+		for (Card card: cards)
+			if (card.getTitle() == cardTitle)
+				card.play();
 	}
 	
 	
