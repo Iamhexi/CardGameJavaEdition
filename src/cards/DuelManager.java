@@ -1,5 +1,7 @@
 package cards;
 
+import javax.swing.JOptionPane;
+
 public class DuelManager implements GameManager
 {
 	protected Player player1;
@@ -78,7 +80,10 @@ public class DuelManager implements GameManager
 	
 	private void announceResults(Player winner, Player loser)
 	{
-		
+        JOptionPane.showMessageDialog(null,
+                winner.getName() + " has won the game, congratulations!",
+                "The game result",
+                JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

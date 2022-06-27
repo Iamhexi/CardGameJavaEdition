@@ -9,7 +9,6 @@ import javax.swing.*;
 
 /*
 	GOALS:
-	- make a card draggable
 	- write unit tests
 	- create PlayerVisual layout
 	- develop GameInterface and organise basic game layout, delegating it from Main
@@ -25,16 +24,23 @@ public class Main
 		JFrame frame = new JFrame();
 		
 		try {
-			Card c = new Card("assets/card.png", new Vector2i(0, 0));
-			frame.add(c.cardVisual);
+			//Card c1 = new Card("assets/card.png", new Vector2i(0, 0));
+			//Card c2 = new Card("assets/card.png", new Vector2i(0, 0));
+			//frame.add(c1.cardVisual);
+			//frame.add(c2.cardVisual);
 
-		} catch (IOException e) {
+			Player p = new Player("Joe", 50, "assets/card.png", new Vector2i(1920/2 - 200, 1080-400));
+			frame.add(p.getPlayerVisual());
+			
+		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
 		}
 		
 		
-		frame.setSize(1000, 500);
+		
+		
+		frame.setSize(1920, 1080);
 		frame.setLayout(null);
 		frame.setVisible(true);
 		

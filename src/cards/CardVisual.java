@@ -34,7 +34,7 @@ class CardVisual extends JPanel
 	
 	protected Point mousePosition;
 	
-	protected boolean underCursor = false;
+	protected Boolean underCursor = false;
 	
 	boolean dragging = false;
 
@@ -72,17 +72,9 @@ class CardVisual extends JPanel
 	private void addListeners()
 	{
 		this.addMouseListener(new MouseAdapter() {
-			public void mouseReleased(MouseEvent e) 
+			public void mouseClicked(MouseEvent e)
 			{
-				underCursor = false;
-				setBounds(e.getXOnScreen(), e.getYOnScreen(), cardWidth, titleHeight + pictureHeight + descriptionHeight);
-				System.out.println( e.getXOnScreen() );
-				System.out.println( e.getYOnScreen() );
-			}
-			  
-			public void mousePressed(MouseEvent e)
-			{
-				underCursor = true;
+				underCursor = !underCursor;
 			}
 		});
 		
@@ -90,7 +82,8 @@ class CardVisual extends JPanel
 			public void mouseMoved(MouseEvent e)
 			{
 				int cardHeight = titleHeight + pictureHeight + descriptionHeight;
-				setBounds(e.getXOnScreen()-(cardWidth/2), e.getYOnScreen()-(cardHeight)/2, cardWidth, cardHeight);
+				if (underCursor)
+					setBounds(e.getXOnScreen()-(cardWidth/2), e.getYOnScreen()-(cardHeight)/2, cardWidth, cardHeight);
 			}
 		});
 	}

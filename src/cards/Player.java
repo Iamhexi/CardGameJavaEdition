@@ -1,5 +1,7 @@
 package cards;
 
+import java.io.IOException;
+
 public final class Player
 {
 	private PlayerLogic playerLogic;
@@ -11,15 +13,17 @@ public final class Player
 		playerVisual = new PlayerVisual();
 	}
 	
-	public String getName()
+	public Player(String name, int initialHealth, String pathToPicture, Vector2i location) throws Exception
 	{
-		return playerLogic.name;
+		playerLogic = new PlayerLogic(initialHealth);
+		playerVisual = new PlayerVisual(name, pathToPicture, location);
 	}
 	
-	public void setName(String newName)
+	public String getName()
 	{
-		playerLogic.name = newName;
+		return playerVisual.getName();
 	}
+	
 	
 	public void drawCard()
 	{
@@ -37,6 +41,11 @@ public final class Player
 	{
 		playerLogic.healDamage(amount); 
 		playerVisual.playHealDamageAnimation(amount); 
+	}
+	
+	public PlayerVisual getPlayerVisual()
+	{
+		return playerVisual;
 	}
 	
 }
