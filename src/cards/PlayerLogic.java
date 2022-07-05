@@ -1,5 +1,7 @@
 package cards;
 
+import javax.swing.JFrame;
+
 public class PlayerLogic
 {
 	protected static int idCounter = 0;
@@ -8,17 +10,12 @@ public class PlayerLogic
 	protected static int id;
 	protected Deck deck;
 	
-	public PlayerLogic(int initialHealth) throws Exception
+	public PlayerLogic(int initialHealth, JFrame frame) throws Exception
 	{
 		if (initialHealth <= 0)
 			throw new Exception("Initial health cannot be less than or equal to zero.");
 		health = initialHealth;
-	}
-	
-	public PlayerLogic()
-	{
-		health = 20;
-		id = idCounter++;
+		deck = new Deck(frame);
 	}
 	
 	public void takeDamage(int amount)
@@ -38,6 +35,6 @@ public class PlayerLogic
 	
 	public void drawCard()
 	{
-		// TODO implement this method
+		deck.drawRandom();
 	}
 }

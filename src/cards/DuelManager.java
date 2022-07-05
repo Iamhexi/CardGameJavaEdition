@@ -2,60 +2,52 @@ package cards;
 
 import javax.swing.JOptionPane;
 
-public class DuelManager implements GameManager
-{
+public class DuelManager implements GameManager {
 	protected Player player1;
 	protected Player player2;
-	
-	protected Player currentPlayer; 
-	
-	public DuelManager()
-	{
-		player1 = new Player();
-		player2 = new Player();
-		
+
+	protected Player currentPlayer;
+
+	public DuelManager(Player player, Player enemy) {
+		player1 = player;
+		player2 = enemy;
+
 		currentPlayer = player1;
 	}
-	
+
 	@Override
-	public void drawCard() 
-	{
+	public void drawCard() {
 		currentPlayer.drawCard();
 	}
 
 	@Override
-	public void takeDamage(int amount)
-	{
+	public void takeDamage(int amount) {
 		currentPlayer.takeDamage(amount);
 	}
 
 	@Override
-	public void healDamage(int amount) 
-	{
+	public void healDamage(int amount) {
 		currentPlayer.healDamage(amount);
 	}
-	
+
 	@Override
-	public void enemyTakesDamage(int amount)
-	{
+	public void enemyTakesDamage(int amount) {
 		if (currentPlayer.hashCode() == player1.hashCode())
 			player2.takeDamage(amount);
 		else
 			player1.takeDamage(amount);
 	}
-	
+
 	@Override
-	public void enemyHealsDamage(int amount)
-	{
+	public void enemyHealsDamage(int amount) {
 		if (currentPlayer.hashCode() == player1.hashCode())
 			player2.healDamage(amount);
 		else
 			player1.healDamage(amount);
 	}
-	
+
 	@Override
-	public void enemyDrawsCard()
-	{
+	public void enemyDrawsCard() {
 		if (currentPlayer.hashCode() == player1.hashCode())
 			player2.drawCard();
 		else
@@ -63,8 +55,7 @@ public class DuelManager implements GameManager
 	}
 
 	@Override
-	public void endTurn() 
-	{
+	public void endTurn() {
 		if (currentPlayer.hashCode() == player1.hashCode())
 			currentPlayer = player2;
 		else
@@ -72,18 +63,14 @@ public class DuelManager implements GameManager
 	}
 
 	@Override
-	public void finishGame(Player winner, Player loser) 
-	{
+	public void finishGame(Player winner, Player loser) {
 		this.announceResults(winner, loser);
 		// TODO Play conffetti animation
 	}
-	
-	private void announceResults(Player winner, Player loser)
-	{
-        JOptionPane.showMessageDialog(null,
-                winner.getName() + " has won the game, congratulations!",
-                "The game result",
-                JOptionPane.INFORMATION_MESSAGE);
+
+	private void announceResults(Player winner, Player loser) {
+		JOptionPane.showMessageDialog(null, winner.getName() + " has won the game, congratulations!", "The game result",
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

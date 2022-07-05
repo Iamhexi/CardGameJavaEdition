@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 final class PlayerVisual extends JPanel
 {
@@ -35,6 +38,9 @@ final class PlayerVisual extends JPanel
 		loadPictureFromFile(pathToPicture);
 		configureNameAppearance();
 		setLocationsAndSizes(location);
+		
+		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+		this.setBorder(b);
 		
 		this.add(this.picture);
 		this.add(this.name);

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 public class Deck
 {
 	private LinkedList<Card> cards;
+	private JFrame mainFrame;
 	
 	public Deck()
 	{
@@ -16,13 +17,13 @@ public class Deck
 	public Deck(JFrame frame)
 	{
 		cards = new LinkedList<Card>();
-		initialise(frame);
+		mainFrame = frame;
 	}
 	
-	private void initialise(JFrame frame)
+	public void addCard(Card card)
 	{
-		for(Card card: cards)
-			frame.add(card.cardVisual);
+		card.initialise(mainFrame);
+		cards.add(card);
 	}
 	
 	public int countCards(CardLocation location)

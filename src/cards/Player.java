@@ -1,21 +1,15 @@
 package cards;
 
-import java.io.IOException;
+import javax.swing.JFrame;
 
 public final class Player
 {
 	private PlayerLogic playerLogic;
 	private PlayerVisual playerVisual;
 	
-	public Player()
+	public Player(String name, int initialHealth, String pathToPicture, Vector2i location, JFrame frame) throws Exception
 	{
-		playerLogic = new PlayerLogic();
-		playerVisual = new PlayerVisual();
-	}
-	
-	public Player(String name, int initialHealth, String pathToPicture, Vector2i location) throws Exception
-	{
-		playerLogic = new PlayerLogic(initialHealth);
+		playerLogic = new PlayerLogic(initialHealth, frame);
 		playerVisual = new PlayerVisual(name, pathToPicture, location);
 	}
 	
@@ -24,6 +18,10 @@ public final class Player
 		return playerVisual.getName();
 	}
 	
+	public void addCardToDeck(Card card)
+	{
+		playerLogic.deck.addCard(card);
+	}
 	
 	public void drawCard()
 	{
@@ -43,9 +41,9 @@ public final class Player
 		playerVisual.playHealDamageAnimation(amount); 
 	}
 	
-	public PlayerVisual getPlayerVisual()
+	public void initialise(JFrame frame)
 	{
-		return playerVisual;
+		frame.add(playerVisual);
 	}
 	
 }

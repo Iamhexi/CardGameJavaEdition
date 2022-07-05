@@ -4,6 +4,7 @@ package cards;
 import java.io.IOException;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 
 public class Card
@@ -85,9 +86,9 @@ public class Card
 	}
 	
 	
-	public JComponent getCardVisuals()
+	public void initialise(JFrame frame)
 	{
-		return cardVisual;
+		frame.add(cardVisual);
 	}
 
 	public int getId() 
