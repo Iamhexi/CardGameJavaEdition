@@ -2,6 +2,7 @@ package cards;
 
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,26 +20,21 @@ public class Card
 		return cardLogic.location;
 	}
 	
-	public Card()
+	public Card(String title, String pathToPicture, Vector2i location) throws Exception
 	{
 		cardLogic = new CardLogic();
-		cardVisual = new CardVisual();
+		cardVisual = new CardVisual(pathToPicture, location);
+		cardVisual.setTitle(title);
 		
-		setOnPlay( () -> {} );
+		setOnPlay( () -> { System.out.println("I got played ;)"); } );
 		setOnDiscard( () -> {} );
 		setOnResurrect( () -> {} );
 		setOnDraw( () -> {} );
 	}
 	
-	public Card(String pathToPicture, Vector2i location) throws IOException
+	public void setDescription(String description)
 	{
-		cardLogic = new CardLogic();
-		cardVisual = new CardVisual(pathToPicture, location);
-		
-		setOnPlay( () -> {} );
-		setOnDiscard( () -> {} );
-		setOnResurrect( () -> {} );
-		setOnDraw( () -> {} );
+		cardVisual.description.setText(description);
 	}
 	
 	public void play()
@@ -99,6 +95,11 @@ public class Card
 	public String getTitle()
 	{
 		return cardVisual.title.getText();
+	}
+	
+	public void registerObserver(PlayingCardObserver o)
+	{
+		cardVisual.observers.add(o);
 	}
 		
 	

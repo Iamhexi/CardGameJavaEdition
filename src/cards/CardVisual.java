@@ -1,11 +1,14 @@
 package cards;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,14 +32,19 @@ class CardVisual extends JPanel {
 	protected static int titleHeight = 50;
 	protected static int pictureHeight = 300;
 	protected static int descriptionHeight = 150;
+	protected static Rectangle cardCastingArea = new Rectangle( 0, 500, 1920, 300 );
 
 	protected Point mousePosition;
 
+	protected Boolean aboveCastingArea = false;
 	protected Boolean underCursor = false;
+	
+	protected List<PlayingCardObserver> observers = new LinkedList<PlayingCardObserver>();
 
 	boolean dragging = false;
 
-	public CardVisual() {
+	public CardVisual()
+	{
 		title = new JLabel();
 		picture = new JLabel();
 		description = new JTextPane();
@@ -57,7 +65,6 @@ class CardVisual extends JPanel {
 		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
 		this.setBorder(b);
 
-		title.setText("Any text");
 		title.setFont(new Font("Serif", Font.BOLD, 24));
 		
 		description.setBackground(new Color(0, 0, 0, 0));
@@ -76,6 +83,9 @@ class CardVisual extends JPanel {
 	private void addListeners() {
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				if (aboveCastingArea)
+					informAllObservers();
+					
 				underCursor = !underCursor;
 			}
 		});
@@ -83,9 +93,19 @@ class CardVisual extends JPanel {
 		this.addMouseMotionListener(new MouseAdapter() {
 			public void mouseMoved(MouseEvent e) {
 				int cardHeight = titleHeight + pictureHeight + descriptionHeight;
+				
+				if (cardCastingArea.contains( new Point ( e.getXOnScreen(), e.getYOnScreen() ) ))
+					aboveCastingArea = true;
+				else
+					aboveCastingArea = false;
+				
 				if (underCursor)
-					setBounds(e.getXOnScreen() - (cardWidth / 2), e.getYOnScreen() - (cardHeight) / 2, cardWidth,
-							cardHeight);
+					setBounds(
+						e.getXOnScreen() - (cardWidth / 2),
+						e.getYOnScreen() - (cardHeight) / 2, 
+						cardWidth,
+						cardHeight
+					);
 			}
 		});
 	}
@@ -124,6 +144,12 @@ class CardVisual extends JPanel {
 	public void playCardPlayingAnimation() {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void informAllObservers()
+	{
+		for( PlayingCardObserver o: observers )
+			o.inform(title.getText());
 	}
 
 }

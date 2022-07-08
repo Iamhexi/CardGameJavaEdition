@@ -24,7 +24,7 @@ public class Deck
 	{
 		card.initialise(mainFrame);
 		cards.add(card);
-	}
+	} 
 	
 	public int countCards(CardLocation location)
 	{
@@ -82,6 +82,13 @@ public class Deck
 	{
 		for (Card card: cards)
 			if (card.getTitle() == cardTitle)
+				card.play();
+	}
+
+	public void play(int id) 
+	{
+		for (Card card: cards)
+			if (card.getId() == id)
 				card.play();
 	}
 	

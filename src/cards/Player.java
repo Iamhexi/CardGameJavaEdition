@@ -2,7 +2,7 @@ package cards;
 
 import javax.swing.JFrame;
 
-public final class Player
+public final class Player implements PlayingCardObserver
 {
 	private PlayerLogic playerLogic;
 	private PlayerVisual playerVisual;
@@ -20,6 +20,7 @@ public final class Player
 	
 	public void addCardToDeck(Card card)
 	{
+		card.registerObserver(this);
 		playerLogic.deck.addCard(card);
 	}
 	
@@ -44,6 +45,12 @@ public final class Player
 	public void initialise(JFrame frame)
 	{
 		frame.add(playerVisual);
+	}
+	
+	public void inform(String cardTitle)
+	{
+		System.out.println("Card title '" + cardTitle  + "' has been played.");
+		playerLogic.deck.play(cardTitle);
 	}
 	
 }
