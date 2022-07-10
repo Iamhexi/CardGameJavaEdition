@@ -18,6 +18,11 @@ public class PlayerLogic
 		deck = new Deck(frame);
 	}
 	
+	public void addCard(Card card)
+	{
+		deck.addCard(card);
+	}
+	
 	public void takeDamage(int amount)
 	{
 		health -= amount;

@@ -5,6 +5,7 @@ import javax.swing.*;
 
 /*
 	GOALS:
+	- set currently hold card's z-index to the top
 	- handle the deck as a pile of cards: organise card positions
 	- write unit tests
 	- develop GameInterface and organise basic game layout, delegating it from Main
@@ -36,19 +37,18 @@ public class Main
 			
 			player.addCardToDeck( db.get("The first card") );
 			player.addCardToDeck( db.get("The first card") );
-			
-			player.initialise(frame);
-
+			player.addCardToDeck( db.get("The first card") );
 			
 			Player enemy = new Player("Enemy", 50, "assets/confused_guy.png", new Vector2i(1920/2 - 200, 0), frame);
 			
 			
-			
-			enemy.initialise(frame);
+
 			
 			//enemy.addCardToDeck( db.get("The first card") );
 			
-			DuelManager duelManager = new DuelManager(player, enemy);
+			DuelManager duelManager = new DuelManager(player, enemy, frame);
+			
+			duelManager.drawCard();
 
 			
 		} catch (Exception e) {

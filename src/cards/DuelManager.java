@@ -1,5 +1,6 @@
 package cards;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class DuelManager implements GameManager {
@@ -8,10 +9,13 @@ public class DuelManager implements GameManager {
 
 	protected Player currentPlayer;
 
-	public DuelManager(Player player, Player enemy) {
+	public DuelManager(Player player, Player enemy, JFrame frame) {
 		player1 = player;
 		player2 = enemy;
-
+		
+		player1.initialise(frame);
+		player2.initialise(frame);
+		
 		currentPlayer = player1;
 	}
 

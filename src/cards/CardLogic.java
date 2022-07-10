@@ -32,7 +32,6 @@ class CardLogic {
 	}
 
 	public CardLogic() {
-		location = CardLocation.Hand;
 		id = idCounter++;
 	}
 

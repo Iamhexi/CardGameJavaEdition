@@ -9,11 +9,6 @@ public class Deck
 	private LinkedList<Card> cards;
 	private JFrame mainFrame;
 	
-	public Deck()
-	{
-		cards = new LinkedList<Card>();
-	}
-	
 	public Deck(JFrame frame)
 	{
 		cards = new LinkedList<Card>();
@@ -46,7 +41,7 @@ public class Deck
 		int upperBound = cardsInLocation.size();
 		Random rndGenerator = new Random();
 		
-		return cardsInLocation.get( rndGenerator.nextInt(upperBound) );
+		return cardsInLocation.get( rndGenerator.nextInt( upperBound ) );
 	}
 	
 	public void discardRandom()
@@ -75,7 +70,7 @@ public class Deck
 	
 	public void playRandom()
 	{
-		getRandomCard(CardLocation.Deck).play();
+		getRandomCard(CardLocation.Hand).play();
 	}
 	
 	public void play(String cardTitle)

@@ -127,8 +127,9 @@ class CardVisual extends JPanel {
 		this.title.setText(title);
 	}
 
-	public void playCardDrawingAnimation() {
-		// TODO Auto-generated method stub
+	public void playCardDrawingAnimation() 
+	{
+		setBounds(500, 500, getBounds().width, getBounds().height);
 	}
 
 	public void playCardResurrectingAnimation() {
