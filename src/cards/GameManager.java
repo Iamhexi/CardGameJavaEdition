@@ -7,6 +7,8 @@ public interface GameManager
 	void takeDamage(int amount);
 	void healDamage(int amount);
 	void drawCard();
+	void discardCard();
+	void enemyDiscardsCard();
 	void enemyTakesDamage(int amount);
 	void enemyHealsDamage(int amount);
 	void enemyDrawsCard(); 

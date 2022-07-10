@@ -77,4 +77,16 @@ public class DuelManager implements GameManager {
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	@Override
+	public void discardCard() 
+	{
+		// TODO Implement discarding a card mechanism
+	}
+
+	@Override
+	public void enemyDiscardsCard() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

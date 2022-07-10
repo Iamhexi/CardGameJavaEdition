@@ -1,10 +1,6 @@
 package cards;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -18,21 +14,40 @@ import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
-class CardVisual extends JPanel {
+class CardVisual extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	protected JLabel picture;
 	protected BufferedImage img;
 	protected JLabel title;
 	protected JTextPane description;
+	
+	protected Vector2i location;
+	protected Timer timer;
+	protected Timer timerForTimer;
+	protected Vector2i velocity;
+	int animationDurationInMs = 5000;
+	int timerTickPeriod = 30;
 
 	protected static int cardWidth = 250;
 
 	protected static int titleHeight = 50;
 	protected static int pictureHeight = 300;
 	protected static int descriptionHeight = 150;
-	protected static Rectangle cardCastingArea = new Rectangle( 0, 500, 1920, 300 );
+	
+	protected static Rectangle handArea = new Rectangle( 0, 600, 1920, 300 );
+	protected static Rectangle battlefieldArea = new Rectangle( 0, 500, 1020, 300 );
+	protected static Rectangle deckArea = new Rectangle( 1500, 600,  900, 300 );
+	protected static Rectangle discardZoneArea = new Rectangle(3000, 3000, 1, 1);
+	
 
 	protected Point mousePosition;
 
@@ -43,14 +58,9 @@ class CardVisual extends JPanel {
 
 	boolean dragging = false;
 
-	public CardVisual()
-	{
-		title = new JLabel();
-		picture = new JLabel();
-		description = new JTextPane();
-	}
-
 	public CardVisual(String pathToPicture, Vector2i location) throws IOException {
+		
+		this.location = location;
 		this.setBounds(location.x, location.y, cardWidth, titleHeight + pictureHeight + descriptionHeight);
 
 		title = new JLabel();
@@ -61,17 +71,29 @@ class CardVisual extends JPanel {
 		this.setCardLayout(location);
 		this.setBackground(new Color(0, 0, 0, 65));
 		
+		
 
 		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
 		this.setBorder(b);
 
 		title.setFont(new Font("Serif", Font.BOLD, 24));
 		
-		description.setBackground(new Color(0, 0, 0, 0));
+		description.setBackground(new Color(255, 255, 255, 0));
 		description.setFont( new Font("Serif", Font.PLAIN, 17) );
 		description.setPreferredSize( new Dimension (cardWidth-10, descriptionHeight-15) );
 		description.setText("This is an example of a card's description. This is an example of a card's description.");
 		description.setEditable(false);
+		
+		timerForTimer = new Timer(animationDurationInMs, new ActionListener() {
+		    public void actionPerformed(ActionEvent evt) {
+		        timer.stop();
+		    }
+		});
+		
+		timerForTimer.start();
+		
+		timer = new Timer(timerTickPeriod, this);
+		timer.start();
 
 		addListeners();
 
@@ -94,7 +116,7 @@ class CardVisual extends JPanel {
 			public void mouseMoved(MouseEvent e) {
 				int cardHeight = titleHeight + pictureHeight + descriptionHeight;
 				
-				if (cardCastingArea.contains( new Point ( e.getXOnScreen(), e.getYOnScreen() ) ))
+				if (handArea.contains( new Point ( e.getXOnScreen(), e.getYOnScreen() ) ))
 					aboveCastingArea = true;
 				else
 					aboveCastingArea = false;
@@ -126,31 +148,52 @@ class CardVisual extends JPanel {
 			throw new Exception("Card title cannot be empty.");
 		this.title.setText(title);
 	}
+	
+	private void sendCardTo(Point location)
+	{
+		int distanceX = location.x - this.location.x;
+		int distanceY = location.y - this.location.y;
+		
+		int velocityX = distanceX / (animationDurationInMs / timerTickPeriod);
+		int velocityY = distanceY / (animationDurationInMs / timerTickPeriod);
+		
+		this.velocity = new Vector2i(velocityX, velocityY);
+	}
 
 	public void playCardDrawingAnimation() 
 	{
-		setBounds(500, 500, getBounds().width, getBounds().height);
+		sendCardTo( handArea.getLocation() );
 	}
 
-	public void playCardResurrectingAnimation() {
-		// TODO Auto-generated method stub
-
+	public void playCardResurrectingAnimation() 
+	{
+		sendCardTo( handArea.getLocation() );
 	}
 
-	public void playCardDiscardingAnimation() {
-		// TODO Auto-generated method stub
-
+	public void playCardDiscardingAnimation() 
+	{
+		sendCardTo( discardZoneArea.getLocation() );
 	}
 
-	public void playCardPlayingAnimation() {
-		// TODO Auto-generated method stub
-
+	public void playCardPlayingAnimation()
+	{
+		sendCardTo( battlefieldArea.getLocation() );
 	}
 
 	public void informAllObservers()
 	{
 		for( PlayingCardObserver o: observers )
 			o.inform(title.getText());
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		location.x += velocity.x;
+		location.y += velocity.y;
+		
+		this.setBounds(location.x, location.y, cardWidth, titleHeight + pictureHeight + descriptionHeight);
+		repaint();
 	}
 
 }
