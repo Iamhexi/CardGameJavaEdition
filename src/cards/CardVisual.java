@@ -33,10 +33,12 @@ class CardVisual extends JPanel implements ActionListener {
 	protected Vector2i location;
 	protected Timer timer;
 	protected Timer timerForTimer;
-	protected Vector2i velocity;
+	protected Vector2i velocity = new Vector2i();
 	int animationDurationInMs = 5000;
 	int timerTickPeriod = 30;
 
+	protected String pathToPicture;
+	
 	protected static int cardWidth = 250;
 
 	protected static int titleHeight = 50;
@@ -57,9 +59,51 @@ class CardVisual extends JPanel implements ActionListener {
 	protected List<PlayingCardObserver> observers = new LinkedList<PlayingCardObserver>();
 
 	boolean dragging = false;
+	
+	public CardVisual()
+	{
+		title = new JLabel();
+		picture = new JLabel();
+		description = new JTextPane();
+		location = new Vector2i();
+		
+		this.setCardLayout(location);
+		this.setBackground(new Color(0, 0, 0, 65));
+		
+		
+
+		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
+		this.setBorder(b);
+
+		title.setFont(new Font("Serif", Font.BOLD, 24));
+		
+		description.setBackground(new Color(255, 255, 255, 0));
+		description.setFont( new Font("Serif", Font.PLAIN, 17) );
+		description.setPreferredSize( new Dimension (cardWidth-10, descriptionHeight-15) );
+		description.setText("This is an example of a card's description. This is an example of a card's description.");
+		description.setEditable(false);
+		
+		timerForTimer = new Timer(animationDurationInMs, new ActionListener() {
+		    public void actionPerformed(ActionEvent evt) {
+		        timer.stop();
+		    }
+		});
+		
+		timerForTimer.start();
+		
+		timer = new Timer(timerTickPeriod, this);
+		timer.start();
+
+		addListeners();
+
+		this.add(title);
+		this.add(picture);
+		this.add(description);
+	}
 
 	public CardVisual(String pathToPicture, Vector2i location) throws IOException {
 		
+		this.pathToPicture = pathToPicture;
 		this.location = location;
 		this.setBounds(location.x, location.y, cardWidth, titleHeight + pictureHeight + descriptionHeight);
 
@@ -139,6 +183,7 @@ class CardVisual extends JPanel implements ActionListener {
 	}
 
 	public void loadPictureFromFile(String pathToPicture) throws IOException {
+		this.pathToPicture = pathToPicture;
 		img = ImageIO.read(new File(pathToPicture));
 		picture = new JLabel(new ImageIcon(img));
 	}

@@ -10,7 +10,8 @@ class CardTest {
 	{
 		Card card;
 		try {
-			card = new Card("title", "assets/confused_guy.png", new Vector2i ( 0, 0 ) );
+			CardDirector director = new CardDirector();
+			card = director.createExample();
 			card.draw();
 			
 			card.play();
@@ -27,7 +28,8 @@ class CardTest {
 	{
 		Card card;
 		try {
-			card = new Card("title", "assets/confused_guy.png", new Vector2i ( 0, 0 ) );
+			CardDirector director = new CardDirector();
+			card = director.createExample();
 			card.draw();
 			
 			card.discard();
@@ -45,7 +47,8 @@ class CardTest {
 	{
 		Card card;
 		try {
-			card = new Card("title", "assets/confused_guy.png", new Vector2i ( 0, 0 ) );
+			CardDirector director = new CardDirector();
+			card = director.createExample();
 			card.draw();
 			
 			card.resurrect();
@@ -61,7 +64,8 @@ class CardTest {
 	void testDraw() {
 		Card card;
 		try {
-			card = new Card("title", "assets/confused_guy.png", new Vector2i ( 0, 0 ) );
+			CardDirector director = new CardDirector();
+			card = director.createExample();
 			
 			card.draw();
 			

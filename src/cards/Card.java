@@ -2,6 +2,7 @@ package cards;
 
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class Card
@@ -16,21 +17,39 @@ public class Card
 		return cardLogic.location;
 	}
 	
-	public Card(String title, String pathToPicture, Vector2i location) throws Exception
-	{
-		cardLogic = new CardLogic();
-		cardVisual = new CardVisual(pathToPicture, location);
-		cardVisual.setTitle(title);
+	Card(
+		String title,
+		String description,
+		String pathToPicture,
+		Vector2i visualLocation,
+		CardLocation logicalLocation,
+		Runnable onPlay,
+		Runnable onDiscard,
+		Runnable onResurrect,
+		Runnable onDraw
+	) throws Exception {
 		
-		setOnPlay( () -> { System.out.println("I got played ;)"); } );
-		setOnDiscard( () -> {} );
-		setOnResurrect( () -> {} );
-		setOnDraw( () -> {} );
-	}
-	
-	public void setDescription(String description)
-	{
+		cardLogic = new CardLogic();
+		cardVisual = new CardVisual();
+		cardVisual.setTitle(title);
 		cardVisual.description.setText(description);
+		cardVisual.loadPictureFromFile(pathToPicture);
+		
+		cardLogic.location = logicalLocation;
+		
+		if (onPlay == null)
+			onPlay = () -> {};
+		if (onDiscard == null)
+			onDiscard = () -> {};
+		if (onResurrect == null)
+			onResurrect = () -> {};
+		if (onDraw == null)
+			onDraw = () -> {};
+		
+		cardLogic.onPlay = onPlay;
+		cardLogic.onDiscard = onDiscard;
+		cardLogic.onResurrect = onResurrect;
+		cardLogic.onDraw = onDraw;
 	}
 	
 	public void play()
@@ -56,27 +75,6 @@ public class Card
 		cardLogic.draw();
 		cardVisual.playCardDrawingAnimation();
 	}
-
-	public void setOnPlay(Runnable action) 
-	{
-		cardLogic.setOnPlay(action);
-	}
-	
-	public void setOnDiscard(Runnable action) 
-	{
-		cardLogic.setOnDiscard(action);
-	}
-	
-	public void setOnResurrect(Runnable action) 
-	{
-		cardLogic.setOnResurrect(action);
-	}
-	
-	public void setOnDraw(Runnable action) 
-	{
-		cardLogic.setOnDraw(action);
-	}
-	
 	
 	public void initialise(JFrame frame)
 	{

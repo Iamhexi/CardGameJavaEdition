@@ -39,22 +39,6 @@ class CardLogic {
 		return location;
 	}
 
-	public void setOnDiscard(Runnable onDiscard) {
-		this.onDiscard = onDiscard;
-	}
-
-	public void setOnPlay(Runnable onPlay) {
-		this.onPlay = onPlay;
-	}
-
-	public void setOnDraw(Runnable onDraw) {
-		this.onDraw = onDraw;
-	}
-
-	public void setOnResurrect(Runnable onResurrect) {
-		this.onResurrect = onResurrect;
-	}
-
 	public int getId() {
 		return id;
 	}

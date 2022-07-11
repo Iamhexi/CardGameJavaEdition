@@ -13,7 +13,8 @@ class DeckTest {
 	{
 		try {
 			JFrame frame = new JFrame();
-			Card card = new Card("Card title", "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
 			
 			deck.addCard(card);
@@ -30,7 +31,8 @@ class DeckTest {
 	{
 		try {
 			JFrame frame = new JFrame();
-			Card card = new Card("Card title", "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
 			
 			deck.addCard(card);
@@ -48,10 +50,11 @@ class DeckTest {
 	void testDiscard() 
 	{
 		try {
-			String cardTitle = "this";
 			JFrame frame = new JFrame();
-			Card card = new Card(cardTitle, "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
+			String cardTitle = card.getTitle();
 			
 			deck.addCard(card);
 			deck.discard(cardTitle); // The default cards' location is Deck
@@ -68,7 +71,8 @@ class DeckTest {
 	{
 		try {
 			JFrame frame = new JFrame();
-			Card card = new Card("haha", "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
 			
 			deck.addCard(card);
@@ -85,10 +89,11 @@ class DeckTest {
 	void testDraw() 
 	{
 		try {
-			String cardTitle = "this";
 			JFrame frame = new JFrame();
-			Card card = new Card(cardTitle, "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
+			String cardTitle = card.getTitle();
 			
 			deck.addCard(card);
 			deck.draw(cardTitle); // The default cards' location is Deck
@@ -105,7 +110,8 @@ class DeckTest {
 	{
 		try {
 			JFrame frame = new JFrame();
-			Card card = new Card("title", "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
 			
 			deck.addCard(card);
@@ -122,10 +128,11 @@ class DeckTest {
 	void testPlayString() 
 	{
 		try {
-			String cardTitle = "this";
 			JFrame frame = new JFrame();
-			Card card = new Card(cardTitle, "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
+			String cardTitle = card.getTitle();
 			
 			deck.addCard(card);
 			deck.draw(cardTitle); // The default cards' location is Deck
@@ -143,7 +150,8 @@ class DeckTest {
 	{
 		try {
 			JFrame frame = new JFrame();
-			Card card = new Card("title", "assets/card.png", new Vector2i(0,0));
+			CardDirector director = new CardDirector();
+			Card card = director.createExample();
 			Deck deck = new Deck(frame);
 			int id = card.getId();
 			

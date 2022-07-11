@@ -13,32 +13,21 @@ import javax.swing.*;
 */
 
 public class Main 
-{
-	static CardDatabase db = new CardDatabase();
-	
+{	
 	public static void main(String[] args)
 	{
 		System.setProperty("awt.useSystemAAFontSettings","on");	
 		JFrame frame = new JFrame();
 		
-		db.createCard( 
-			new CardBlueprintData(
-				"The first card",
-				"Show me what you got, haha!",
-				"assets/card.png",
-				() -> { System.out.println("You are great, good boi!");  },
-				() -> {},
-				() -> {},
-				() -> {}
-			)
-		);
+		CardDirector director = new CardDirector(); 
 		
 		try {
 			Player player = new Player("Player", 50, "assets/confused_guy.png", new Vector2i(1920/2 - 200, 1080-400), frame);
 			
-			player.addCardToDeck( db.get("The first card") );
-			player.addCardToDeck( db.get("The first card") );
-			player.addCardToDeck( db.get("The first card") );
+			player.addCardToDeck( director.createExample() );
+			player.addCardToDeck( director.createExample() );
+			player.addCardToDeck( director.createExample() );
+
 			
 			
 			Player enemy = new Player("Enemy", 50, "assets/confused_guy.png", new Vector2i(1920/2 - 200, 0), frame);
