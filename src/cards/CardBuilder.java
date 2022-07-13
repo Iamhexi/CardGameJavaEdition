@@ -33,13 +33,13 @@ public class CardBuilder
 		
 		CardBuilder description(String description)
 		{
-			this.cardVisual.description.setText(description);
+			cardVisual.description.setText(description);
 			return this;
 		}
 		
 		CardBuilder pathToPicture(String path)
 		{
-			this.cardVisual.pathToPicture = path;
+			cardVisual.pathToPicture = path;
 			return this;
 		}
 		

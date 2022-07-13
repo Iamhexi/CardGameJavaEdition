@@ -30,11 +30,9 @@ public class Card
 	) throws Exception {
 		
 		cardLogic = new CardLogic();
-		cardVisual = new CardVisual();
+		cardVisual = new CardVisual(pathToPicture, visualLocation);
 		cardVisual.setTitle(title);
 		cardVisual.description.setText(description);
-		cardVisual.loadPictureFromFile(pathToPicture);
-		
 		cardLogic.location = logicalLocation;
 		
 		if (onPlay == null)

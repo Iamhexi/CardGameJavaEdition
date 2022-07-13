@@ -47,9 +47,14 @@ public final class Player implements PlayingCardObserver
 		frame.add(playerVisual);
 	}
 	
+	public void playCard(String cardTitle)
+	{
+		playerLogic.deck.play(cardTitle);
+	}
+	
 	public void inform(String cardTitle)
 	{
-		System.out.println("Card title '" + cardTitle  + "' has been played.");
+		System.out.println("Card titled '" + cardTitle  + "' has been played.");
 		playerLogic.deck.play(cardTitle);
 	}
 	

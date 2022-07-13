@@ -5,8 +5,8 @@ import javax.swing.*;
 
 /*
 	GOALS:
+	- rethink how to invoke playing a card (from player's perspective or duel manager?)
 	- make it possible to discard/resurrect/play a card (as it is possible to draw a card)
-	- set currently hold card's z-index to the top
 	- handle the deck as a pile of cards: organise card positions
 	- write unit tests
 	- develop GameInterface and organise basic game layout, delegating it from Main
@@ -20,6 +20,7 @@ public class Main
 		JFrame frame = new JFrame();
 		
 		CardDirector director = new CardDirector(); 
+		CardVisual.frame = frame;
 		
 		try {
 			Player player = new Player("Player", 50, "assets/confused_guy.png", new Vector2i(1920/2 - 200, 1080-400), frame);
@@ -36,8 +37,8 @@ public class Main
 			
 			DuelManager duelManager = new DuelManager(player, enemy, frame);
 			
-			duelManager.drawCard();
-			duelManager.drawCard();
+			//duelManager.drawCard();
+			//duelManager.drawCard();
 			
 		} catch (Exception e) {
 			System.out.println(e);

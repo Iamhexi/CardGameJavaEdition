@@ -22,9 +22,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-class CardVisual extends JPanel implements ActionListener {
+class CardVisual extends JLayeredPane implements ActionListener {
 	private static final long serialVersionUID = 1L;
-
+	
+	public static JFrame frame;
+	private int positionBuffer;
+	
 	protected JLabel picture;
 	protected BufferedImage img;
 	protected JLabel title;
@@ -60,17 +63,19 @@ class CardVisual extends JPanel implements ActionListener {
 
 	boolean dragging = false;
 	
-	public CardVisual()
-	{
+	public CardVisual() {
+
+		location = new Vector2i();
+		this.setBounds(location.x, location.y, cardWidth, titleHeight + pictureHeight + descriptionHeight);
+
 		title = new JLabel();
 		picture = new JLabel();
 		description = new JTextPane();
-		location = new Vector2i();
-		
+
 		this.setCardLayout(location);
 		this.setBackground(new Color(0, 0, 0, 65));
 		
-		
+		this.positionBuffer = frame.getComponentZOrder(this);
 
 		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
 		this.setBorder(b);
@@ -115,7 +120,7 @@ class CardVisual extends JPanel implements ActionListener {
 		this.setCardLayout(location);
 		this.setBackground(new Color(0, 0, 0, 65));
 		
-		
+		this.positionBuffer = frame.getComponentZOrder(this);
 
 		Border b = BorderFactory.createBevelBorder(BevelBorder.RAISED);
 		this.setBorder(b);
@@ -153,6 +158,7 @@ class CardVisual extends JPanel implements ActionListener {
 					informAllObservers();
 					
 				underCursor = !underCursor;
+				toggleTopBottomPosition();
 			}
 		});
 
@@ -166,12 +172,15 @@ class CardVisual extends JPanel implements ActionListener {
 					aboveCastingArea = false;
 				
 				if (underCursor)
+				{
 					setBounds(
 						e.getXOnScreen() - (cardWidth / 2),
 						e.getYOnScreen() - (cardHeight) / 2, 
 						cardWidth,
 						cardHeight
 					);
+					
+				}
 			}
 		});
 	}
@@ -240,5 +249,12 @@ class CardVisual extends JPanel implements ActionListener {
 		this.setBounds(location.x, location.y, cardWidth, titleHeight + pictureHeight + descriptionHeight);
 		repaint();
 	}
-
+	
+	private void toggleTopBottomPosition()
+	{
+		if (frame.getComponentZOrder(this) != 0)
+			frame.setComponentZOrder(this, 0);
+		else
+			frame.setComponentZOrder(this, positionBuffer);
+	}
 }
